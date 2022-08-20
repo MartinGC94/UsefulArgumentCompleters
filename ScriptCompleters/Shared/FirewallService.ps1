@@ -16,6 +16,10 @@ Register-ArgumentCompleter -CommandName @(
     }
     foreach ($Service in [CompletionHelper]::GetCachedResults('Get-Service',$false))
     {
+        if ($null -eq $Service)
+        {
+            continue
+        }
         if ($Service.Name.StartsWith($TrimmedWord, [StringComparison]::OrdinalIgnoreCase))
         {
             [CompletionHelper]::NewParamCompletionResult($Service.Name, $Service.DisplayName)

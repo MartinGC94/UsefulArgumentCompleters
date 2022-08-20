@@ -6,6 +6,10 @@ Register-ArgumentCompleter -CommandName Get-PnpDevice -ParameterName Class -Scri
     $TrimmedWord = [CompletionHelper]::TrimQuotes($wordToComplete)
     foreach ($Class in [CompletionHelper]::GetCachedResults("Get-PnpDevice | Select-Object -ExpandProperty Class | Sort-Object -Unique", $false))
     {
+        if ($null -eq $Class)
+        {
+            continue
+        }
         if ($Class.StartsWith($TrimmedWord, [StringComparison]::OrdinalIgnoreCase))
         {
             [CompletionHelper]::NewParamCompletionResult($Class)

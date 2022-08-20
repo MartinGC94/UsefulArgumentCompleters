@@ -121,6 +121,10 @@ $ScriptBlock = {
 
     foreach ($Adapter in [CompletionHelper]::GetCachedResults("Get-NetAdapter", $false))
     {
+        if ($null -eq $Adapter)
+        {
+            continue
+        }
         if ($Adapter.Name.StartsWith($TrimmedWord, [StringComparison]::OrdinalIgnoreCase))
         {
             [CompletionHelper]::NewParamCompletionResult($Adapter.Name, $Adapter.InterfaceDescription)

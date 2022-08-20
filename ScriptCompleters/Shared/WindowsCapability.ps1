@@ -14,6 +14,10 @@ Register-ArgumentCompleter -CommandName Add-WindowsCapability,Get-WindowsCapabil
     $TrimmedWord = [CompletionHelper]::TrimQuotes($wordToComplete)
     foreach ($Feature in $FoundFeatures)
     {
+        if ($null -eq $Feature)
+        {
+            continue
+        }
         if ($Feature.Name.StartsWith($TrimmedWord, [StringComparison]::OrdinalIgnoreCase))
         {
             [CompletionHelper]::NewParamCompletionResult($Feature.Name)

@@ -125,7 +125,14 @@ class CompletionHelper
         }
         $Result = if (!$ValidateInput -or [CompletionHelper]::CommandIsSafe($Command))
         {
-            Invoke-Expression -Command $Command
+            try
+            {
+                Invoke-Expression -Command $Command
+            }
+            catch
+            {
+                return $null
+            }
         }
         else
         {

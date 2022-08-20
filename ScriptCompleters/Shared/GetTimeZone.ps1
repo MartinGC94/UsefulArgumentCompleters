@@ -6,6 +6,10 @@ $ScriptBlock = {
     $TrimmedWord = [CompletionHelper]::TrimQuotes($wordToComplete)
     foreach ($TimeZone in [CompletionHelper]::GetCachedResults('Get-TimeZone -ListAvailable', $false))
     {
+        if ($null -eq $TimeZone)
+        {
+            continue
+        }
         $MatchText = if ($parameterName -eq "Name")
         {
             $TimeZone.StandardName

@@ -6,6 +6,10 @@ $Scriptblock = {
 
     foreach ($Log in [CompletionHelper]::GetCachedResults('Get-WinEvent -ListLog *', $false))
     {
+        if ($null -eq $Log)
+        {
+            continue
+        }
         if ($Log.LogName -like "*$TrimmedWord*")
         {
             [CompletionHelper]::NewParamCompletionResult($Log.LogName)
@@ -20,6 +24,10 @@ $Scriptblock = {
 
     foreach ($Log in [CompletionHelper]::GetCachedResults('Get-WinEvent -ListProvider *', $false))
     {
+        if ($null -eq $Log)
+        {
+            continue
+        }
         if ($Log.Name -like "*$TrimmedWord*")
         {
             [CompletionHelper]::NewParamCompletionResult($Log.Name)

@@ -90,10 +90,14 @@ Register-ArgumentCompleter -CommandName @(
             'StaticServiceStore'
             'ConfigurableServiceStore'
         }
-        [CompletionHelper]::GetCachedResults('Get-GPO -All',$false)
+        [CompletionHelper]::GetCachedResults('Get-GPO -All', $false)
     )
     foreach ($PolicyStore in $ValidValues)
     {
+        if ($null -eq $PolicyStore)
+        {
+            continue
+        }
         $PolicyStoreName = if ($PolicyStore -is [string])
         {
             $PolicyStore
