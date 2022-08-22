@@ -1,3 +1,5 @@
+1.0.2:
+    Add cultureinfo and appx argument completers
 1.0.1:
     Fix issue when commands used in the cache were unavailable, or otherwise failed.
 1.0:
