@@ -1,3 +1,5 @@
+1.0.4:
+    Add process, port and address completers for Get-NetTCPConnection
 1.0.3:
     Add Verb completer for Start-Process
 1.0.2:
