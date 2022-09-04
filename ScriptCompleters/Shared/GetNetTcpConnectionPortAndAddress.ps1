@@ -22,7 +22,7 @@ $ScriptBlock = {
         }
         'RemotePort'
         {
-            Get-NetTCPConnection | Select-Object -ExpandProperty LocalAddress | Sort-Object -Unique
+            Get-NetTCPConnection | Select-Object -ExpandProperty RemotePort | Sort-Object -Unique
             break
         }
     }

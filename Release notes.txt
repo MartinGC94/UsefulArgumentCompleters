@@ -1,3 +1,5 @@
+1.0.5:
+    Fix RemotePort parameter completion for Get-NetTCPConnection
 1.0.4:
     Add process, port and address completers for Get-NetTCPConnection
 1.0.3:
