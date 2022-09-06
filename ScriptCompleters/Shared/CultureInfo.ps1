@@ -13,8 +13,12 @@ $ScriptBlock = {
             continue
         }
 
-        if ($Culture.Name -eq [string]::Empty -and $TrimmedWord -eq [string]::Empty)
+        if ($Culture.Name -eq [string]::Empty -and $Culture.DisplayName.StartsWith($TrimmedWord))
         {
+            if ($commandName -in 'Get-InstalledLanguage','Install-Language','Set-SystemPreferredUILanguage','Uninstall-Language')
+            {
+                continue
+            }
             [CompletionResult]::new(
                 "''",
                 $Culture.DisplayName,
@@ -32,6 +36,6 @@ $ScriptBlock = {
 }
 Register-ArgumentCompleter -ScriptBlock $ScriptBlock -ParameterName UICulture    -CommandName Update-Help,Save-Help,New-PSSessionOption
 Register-ArgumentCompleter -ScriptBlock $ScriptBlock -ParameterName Culture      -CommandName New-PSSessionOption
-Register-ArgumentCompleter -ScriptBlock $ScriptBlock -ParameterName Language     -CommandName Set-WinUILanguageOverride
+Register-ArgumentCompleter -ScriptBlock $ScriptBlock -ParameterName Language     -CommandName Set-WinUILanguageOverride,Get-InstalledLanguage,Install-Language,Set-SystemPreferredUILanguage,Uninstall-Language
 Register-ArgumentCompleter -ScriptBlock $ScriptBlock -ParameterName SystemLocale -CommandName Set-WinSystemLocale
 Register-ArgumentCompleter -ScriptBlock $ScriptBlock -ParameterName CultureInfo  -CommandName Set-Culture

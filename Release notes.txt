@@ -1,3 +1,7 @@
+1.0.7:
+    Add language completer for LanguagePackManagement commands
+    Add GeoID completer for Set-WinHomeLocation
+    Include Invariant language in cultureinfo results if input text matches the displayname.
 1.0.6:
     Add RDP to the port completers for the firewall commands and Test-NetConnection.
     Update the list item text for the GptType argument completer for New-Partition to show the friendlyname instead of the GUID.
