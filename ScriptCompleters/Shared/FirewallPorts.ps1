@@ -51,6 +51,7 @@ $ScriptBlock = {
         @{Name="KMS"                    ;Value="1688"            ;ToolTip='TCP port 1688. Default KMS (Key management service) port.'}
         @{Name="LDAPGC"                 ;Value="3268"            ;ToolTip='TCP and UDP port 3268. LDAP global catalog.'}
         @{Name="LDAPSGC"                ;Value="3269"            ;ToolTip='TCP and UDP port 3269. LDAPS global catalog.'}
+        @{Name="RDP"                    ;Value="3389"            ;ToolTip='TCP and UDP port 3389. Default RDP port.'}
         @{Name="WinRM"                  ;Value="5985"            ;ToolTip='TCP port 5985. Default WinRM port.'}
         @{Name="WinRMHttps"             ;Value="5986"            ;ToolTip='TCP port 5986. Default WinRM HTTPs port.'}
     )

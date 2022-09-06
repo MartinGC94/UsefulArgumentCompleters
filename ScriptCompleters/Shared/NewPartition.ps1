@@ -1,4 +1,5 @@
 using module .\Classes\CompletionHelper.psm1
+using namespace System.Management.Automation
 
 Register-ArgumentCompleter -CommandName New-Partition -ParameterName GptType -ScriptBlock {
     param($commandName, $parameterName, $wordToComplete, $commandAst, $fakeBoundParameters)
@@ -15,7 +16,12 @@ Register-ArgumentCompleter -CommandName New-Partition -ParameterName GptType -Sc
     {
         if ($Item['Name'].StartsWith($TrimmedWord, [StringComparison]::OrdinalIgnoreCase))
         {
-            [CompletionHelper]::NewParamCompletionResult($Item['Guid'], $Item['Name'])
+            [CompletionResult]::new(
+                "'$($Item['Guid'])'",
+                $Item['Name'],
+                [CompletionResultType]::ParameterValue,
+                $Item['Name']
+            )
         }
     }
 }

@@ -14,7 +14,7 @@ Register-ArgumentCompleter -CommandName @(
     {
         [CompletionHelper]::NewParamCompletionResult("Any")
     }
-    foreach ($Service in [CompletionHelper]::GetCachedResults('Get-Service',$false))
+    foreach ($Service in [CompletionHelper]::GetCachedResults('Get-Service', $false))
     {
         if ($null -eq $Service)
         {

@@ -1,3 +1,6 @@
+1.0.6:
+    Add RDP to the port completers for the firewall commands and Test-NetConnection.
+    Update the list item text for the GptType argument completer for New-Partition to show the friendlyname instead of the GUID.
 1.0.5:
     Fix RemotePort parameter completion for Get-NetTCPConnection
 1.0.4:

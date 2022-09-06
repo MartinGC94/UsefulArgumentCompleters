@@ -26,7 +26,7 @@ if ($UpdatePSGalleryData)
     Find-Module | Select-Object -Property @(
         "Name"
         @{Name = "CompanyName"; Expression = {$_.CompanyName -join ','}}
-    ) | Sort-Object -Property Name | Export-Csv -Delimiter ';' -Path "$PSScriptRoot\PSGallery.csv" -NoTypeInformation -Force
+    ) | Sort-Object -Property Name | Export-Csv -Delimiter ',' -Path "$PSScriptRoot\PSGallery.csv" -NoTypeInformation -Force
 }
 
 #region Create destination folder and make sure it is empty
