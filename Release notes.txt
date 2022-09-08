@@ -1,3 +1,5 @@
+1.0.9:
+    Fix argument completer for Get-UsefulArgumentCompleter so it properly uses partial input to filter the results.
 1.0.8:
     Add optional HyperV VMName and ID completers.
     Add Get-UsefulArgumentCompleter command which allows the user to view the available argument completers.

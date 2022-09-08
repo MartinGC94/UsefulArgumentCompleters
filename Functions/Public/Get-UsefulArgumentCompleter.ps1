@@ -22,7 +22,7 @@ function Get-UsefulArgumentCompleter
             $Commands = [CompletionHelper]::GetCachedResults("Import-Csv -Path '$PSScriptRoot\ArgumentCompleters.csv' -Delimiter ','", $false) | Select-Object -ExpandProperty CommandName | Sort-Object -Unique
             foreach ($Item in $Commands)
             {
-                if ($Item.StartsWith($TrimmedWord), [StringComparison]::OrdinalIgnoreCase)
+                if ($Item.StartsWith($TrimmedWord, [StringComparison]::OrdinalIgnoreCase))
                 {
                     [CompletionHelper]::NewParamCompletionResult($Item)
                 }
@@ -39,7 +39,7 @@ function Get-UsefulArgumentCompleter
             $Parameters = [CompletionHelper]::GetCachedResults("Import-Csv -Path '$PSScriptRoot\ArgumentCompleters.csv' -Delimiter ','", $false) | Select-Object -ExpandProperty ParameterName | Sort-Object -Unique
             foreach ($Item in $Parameters)
             {
-                if ($Item.StartsWith($TrimmedWord), [StringComparison]::OrdinalIgnoreCase)
+                if ($Item.StartsWith($TrimmedWord, [StringComparison]::OrdinalIgnoreCase))
                 {
                     [CompletionHelper]::NewParamCompletionResult($Item)
                 }
