@@ -1,7 +1,23 @@
 using module .\Classes\CompletionHelper.psm1
 using namespace System
 
-$InterfaceAliasCommands = @(
+$ScriptBlock = {
+    param($commandName, $parameterName, $wordToComplete, $commandAst, $fakeBoundParameters)
+    $TrimmedWord = [CompletionHelper]::TrimQuotes($wordToComplete)
+
+    foreach ($Adapter in [CompletionHelper]::GetCachedResults("Get-NetAdapter", $false))
+    {
+        if ($null -eq $Adapter)
+        {
+            continue
+        }
+        if ($Adapter.Name.StartsWith($TrimmedWord, [StringComparison]::OrdinalIgnoreCase))
+        {
+            [CompletionHelper]::NewParamCompletionResult($Adapter.Name, $Adapter.InterfaceDescription)
+        }
+    }
+}
+Register-ArgumentCompleter -ScriptBlock $ScriptBlock -ParameterName InterfaceAlias -CommandName @(
     'Get-DnsClient'
     'Get-DnsClientServerAddress'
     'Get-NetConnectionProfile'
@@ -34,7 +50,7 @@ $InterfaceAliasCommands = @(
     'Set-NetNeighbor'
     'Set-NetRoute'
 )
-$NameCommands = @(
+Register-ArgumentCompleter -ScriptBlock $ScriptBlock -ParameterName Name -CommandName @(
     'Add-NetLbfoTeamMember'
     'Add-NetLbfoTeamNic'
     'Disable-NetAdapter'
@@ -115,21 +131,3 @@ $NameCommands = @(
     'Set-NetLbfoTeamMember'
     'Set-NetLbfoTeamNic'
 )
-$ScriptBlock = {
-    param($commandName, $parameterName, $wordToComplete, $commandAst, $fakeBoundParameters)
-    $TrimmedWord = [CompletionHelper]::TrimQuotes($wordToComplete)
-
-    foreach ($Adapter in [CompletionHelper]::GetCachedResults("Get-NetAdapter", $false))
-    {
-        if ($null -eq $Adapter)
-        {
-            continue
-        }
-        if ($Adapter.Name.StartsWith($TrimmedWord, [StringComparison]::OrdinalIgnoreCase))
-        {
-            [CompletionHelper]::NewParamCompletionResult($Adapter.Name, $Adapter.InterfaceDescription)
-        }
-    }
-}
-Register-ArgumentCompleter -CommandName $InterfaceAliasCommands -ParameterName InterfaceAlias -ScriptBlock $ScriptBlock
-Register-ArgumentCompleter -CommandName $NameCommands -ParameterName Name -ScriptBlock $ScriptBlock
