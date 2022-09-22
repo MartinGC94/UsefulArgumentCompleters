@@ -10,7 +10,7 @@ $Scriptblock = {
         {
             continue
         }
-        if ($Log.LogName -like "*$TrimmedWord*")
+        if ($Log.LogName -like "$TrimmedWord*")
         {
             [CompletionHelper]::NewParamCompletionResult($Log.LogName)
         }
@@ -28,11 +28,11 @@ $Scriptblock = {
         {
             continue
         }
-        if ($Log.Name -like "*$TrimmedWord*")
+        if ($Log.Name -like "$TrimmedWord*")
         {
             [CompletionHelper]::NewParamCompletionResult($Log.Name)
         }
     }
 }
-Register-ArgumentCompleter -CommandName Get-WinEvent -ParameterName ProviderName -ScriptBlock $Scriptblock
+Register-ArgumentCompleter -CommandName Get-WinEvent,New-WinEvent -ParameterName ProviderName -ScriptBlock $Scriptblock
 Register-ArgumentCompleter -CommandName Get-WinEvent -ParameterName ListProvider -ScriptBlock $Scriptblock

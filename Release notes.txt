@@ -1,3 +1,11 @@
+1.0.10:
+    Add completer for New-WinEvent
+    Add PSRepository completer
+    Add completer for Get-Command and Get-Verb
+    Add Volume completer
+    Add Disk completer
+    Update completer for Get-WinEvent to no longer force a wildcard before the input text
+    Fix the parameter help for Get-UsefulArgumentCompleter
 1.0.9:
     Fix argument completer for Get-UsefulArgumentCompleter so it properly uses partial input to filter the results.
 1.0.8:

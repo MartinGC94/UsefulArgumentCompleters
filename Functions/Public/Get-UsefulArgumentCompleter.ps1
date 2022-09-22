@@ -7,7 +7,7 @@ using namespace System
 .PARAMETER CommandName
     Filters the displayed argument completers to the specified commands.
 
-.PARAMETER CommandName
+.PARAMETER ParameterName
     Filters the displayed argument completers to the specified parameters.
 #>
 function Get-UsefulArgumentCompleter
