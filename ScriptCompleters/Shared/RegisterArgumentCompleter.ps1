@@ -9,10 +9,10 @@ Register-ArgumentCompleter -CommandName Register-ArgumentCompleter -ParameterNam
         return
     }
     $CommandInfo = Get-Command -Name $CommandToFind
-    $TrimmedWord = [CompletionHelper]::TrimQuotes($wordToComplete)
+    $WildcardInput = [CompletionHelper]::TrimQuotes($wordToComplete) + '*'
     foreach ($Key in $CommandInfo.Parameters.Keys)
     {
-        if (!$Key.StartsWith($TrimmedWord, [StringComparison]::OrdinalIgnoreCase))
+        if ($Key -notlike $WildcardInput)
         {
             continue
         }

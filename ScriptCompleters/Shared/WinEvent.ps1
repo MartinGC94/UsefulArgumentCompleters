@@ -2,7 +2,7 @@ using module .\Classes\CompletionHelper.psm1
 
 $Scriptblock = {
     param($commandName, $parameterName, $wordToComplete, $commandAst, $fakeBoundParameters)
-    $TrimmedWord = [CompletionHelper]::TrimQuotes($wordToComplete)
+    $WildcardInput = [CompletionHelper]::TrimQuotes($wordToComplete) + '*'
 
     foreach ($Log in [CompletionHelper]::GetCachedResults('Get-WinEvent -ListLog *', $false))
     {
@@ -10,7 +10,7 @@ $Scriptblock = {
         {
             continue
         }
-        if ($Log.LogName -like "$TrimmedWord*")
+        if ($Log.LogName -like $WildcardInput)
         {
             [CompletionHelper]::NewParamCompletionResult($Log.LogName)
         }
@@ -20,7 +20,7 @@ Register-ArgumentCompleter -CommandName Get-WinEvent -ParameterName LogName -Scr
 Register-ArgumentCompleter -CommandName Get-WinEvent -ParameterName ListLog -ScriptBlock $Scriptblock
 $Scriptblock = {
     param($commandName, $parameterName, $wordToComplete, $commandAst, $fakeBoundParameters)
-    $TrimmedWord = [CompletionHelper]::TrimQuotes($wordToComplete)
+    $WildcardInput = [CompletionHelper]::TrimQuotes($wordToComplete) + '*'
 
     foreach ($Log in [CompletionHelper]::GetCachedResults('Get-WinEvent -ListProvider *', $false))
     {
@@ -28,7 +28,7 @@ $Scriptblock = {
         {
             continue
         }
-        if ($Log.Name -like "$TrimmedWord*")
+        if ($Log.Name -like $WildcardInput)
         {
             [CompletionHelper]::NewParamCompletionResult($Log.Name)
         }

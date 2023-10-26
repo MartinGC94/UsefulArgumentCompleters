@@ -4,7 +4,7 @@ using namespace System.Management.Automation
 
 Register-ArgumentCompleter -CommandName Set-WinHomeLocation -ParameterName GeoId -ScriptBlock {
     param($commandName, $parameterName, $wordToComplete, $commandAst, $fakeBoundParameters)
-    $TrimmedWord = [CompletionHelper]::TrimQuotes($wordToComplete)
+    $WildcardInput = [CompletionHelper]::TrimQuotes($wordToComplete) + '*'
 
     $AllRegions = [CompletionHelper]::GetCachedResults(@'
 foreach ($Culture in [cultureinfo]::GetCultures([System.Globalization.CultureTypes]::AllCultures))
@@ -24,7 +24,7 @@ foreach ($Culture in [cultureinfo]::GetCultures([System.Globalization.CultureTyp
             continue
         }
 
-        if ($RegionInfo.EnglishName.StartsWith($TrimmedWord, [StringComparison]::OrdinalIgnoreCase))
+        if ($RegionInfo.EnglishName -like $WildcardInput)
         {
             [CompletionResult]::new(
                 $RegionInfo.GeoId,

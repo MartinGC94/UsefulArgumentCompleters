@@ -11,14 +11,15 @@ Register-ArgumentCompleter -CommandName Enable-WindowsOptionalFeature,Disable-Wi
     {
         [CompletionHelper]::GetCachedResults('Get-WindowsOptionalFeature -Online', $false)
     }
-    $TrimmedWord = [CompletionHelper]::TrimQuotes($wordToComplete)
+
+    $WildcardInput = [CompletionHelper]::TrimQuotes($wordToComplete) + '*'
     foreach ($Feature in $FoundFeatures)
     {
         if ($null -eq $Feature)
         {
             continue
         }
-        if ($Feature.FeatureName.StartsWith($TrimmedWord, [StringComparison]::OrdinalIgnoreCase))
+        if ($Feature.FeatureName -like $WildcardInput)
         {
             [CompletionHelper]::NewParamCompletionResult($Feature.FeatureName)
         }

@@ -8,9 +8,9 @@ Register-ArgumentCompleter -CommandName @(
     'Set-NetFirewallServiceFilter'
 ) -ParameterName Service -ScriptBlock {
     param($commandName, $parameterName, $wordToComplete, $commandAst, $fakeBoundParameters)
-    $TrimmedWord = [CompletionHelper]::TrimQuotes($wordToComplete)
+    $WildcardInput = [CompletionHelper]::TrimQuotes($wordToComplete) + '*'
     
-    if ("Any".StartsWith($TrimmedWord, [StringComparison]::OrdinalIgnoreCase))
+    if ("Any" -like $WildcardInput)
     {
         [CompletionHelper]::NewParamCompletionResult("Any")
     }
@@ -20,7 +20,7 @@ Register-ArgumentCompleter -CommandName @(
         {
             continue
         }
-        if ($Service.Name.StartsWith($TrimmedWord, [StringComparison]::OrdinalIgnoreCase))
+        if ($Service.Name -like $WildcardInput)
         {
             [CompletionHelper]::NewParamCompletionResult($Service.Name, $Service.DisplayName)
         }

@@ -477,10 +477,10 @@ Register-ArgumentCompleter -CommandName Get-ADUser,Get-ADComputer,Get-ADGroup,Ge
             'WindowsServer2003KCCSiteLinkBridgingEnabled'
         )
     }
-    $TrimmedWord = [CompletionHelper]::TrimQuotes($wordToComplete)
+    $WildcardInput = [CompletionHelper]::TrimQuotes($wordToComplete) + '*'
     foreach ($Item in $Values[$commandName])
     {
-        if ($Item.StartsWith($TrimmedWord, [StringComparison]::OrdinalIgnoreCase))
+        if ($Item -like $WildcardInput)
         {
             [CompletionHelper]::NewParamCompletionResult($Item)
         }

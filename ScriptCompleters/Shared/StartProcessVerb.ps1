@@ -4,7 +4,7 @@ using namespace System.Management.Automation
 
 Register-ArgumentCompleter -CommandName Start-Process -ParameterName Verb -ScriptBlock {
     param($commandName, $parameterName, $wordToComplete, $commandAst, $fakeBoundParameters)
-    $TrimmedWord = [CompletionHelper]::TrimQuotes($wordToComplete)
+    $WildcardInput = [CompletionHelper]::TrimQuotes($wordToComplete) + '*'
 
     $FilePath = $fakeBoundParameters['FilePath']
     if ([string]::IsNullOrWhiteSpace($FilePath))
@@ -22,7 +22,7 @@ Register-ArgumentCompleter -CommandName Start-Process -ParameterName Verb -Scrip
 
     foreach ($Verb in $CommandInfo.Verbs)
     {
-        if ($Verb.StartsWith($TrimmedWord, [StringComparison]::OrdinalIgnoreCase))
+        if ($Verb -like $WildcardInput)
         {
             [CompletionHelper]::NewParamCompletionResult($Verb)
         }

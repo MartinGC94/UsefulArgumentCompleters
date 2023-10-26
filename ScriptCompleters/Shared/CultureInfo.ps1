@@ -4,7 +4,7 @@ using namespace System.Management.Automation
 
 $ScriptBlock = {
     param($commandName, $parameterName, $wordToComplete, $commandAst, $fakeBoundParameters)
-    $TrimmedWord = [CompletionHelper]::TrimQuotes($wordToComplete)
+    $WildcardInput = [CompletionHelper]::TrimQuotes($wordToComplete) + '*'
 
     foreach ($Culture in [CompletionHelper]::GetCachedResults('[cultureinfo]::GetCultures([System.Globalization.CultureTypes]::AllCultures)', $false))
     {
@@ -13,7 +13,7 @@ $ScriptBlock = {
             continue
         }
 
-        if ($Culture.Name -eq [string]::Empty -and $Culture.DisplayName.StartsWith($TrimmedWord))
+        if ($Culture.Name -eq [string]::Empty -and $Culture.DisplayName -like $WildcardInput)
         {
             if ($commandName -in 'Get-InstalledLanguage','Install-Language','Set-SystemPreferredUILanguage','Uninstall-Language')
             {
@@ -28,7 +28,7 @@ $ScriptBlock = {
             continue
         }
 
-        if ($Culture.Name.StartsWith($TrimmedWord, [StringComparison]::OrdinalIgnoreCase))
+        if ($Culture.Name -like $WildcardInput)
         {
             [CompletionHelper]::NewParamCompletionResult($Culture.Name, $Culture.DisplayName)
         }

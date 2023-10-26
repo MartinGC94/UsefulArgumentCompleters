@@ -2,17 +2,17 @@
 
 $ScriptBlock = {
     param($commandName, $parameterName, $wordToComplete, $commandAst, $fakeBoundParameters)
-    $TrimmedWord = [CompletionHelper]::TrimQuotes($wordToComplete)
+    $WildcardInput = [CompletionHelper]::TrimQuotes($wordToComplete) + '*'
     $Values = switch ($parameterName)
     {
         'LocalAddress'
         {
-            Get-NetTCPConnection -LocalAddress "$TrimmedWord*" | Select-Object -ExpandProperty LocalAddress | Sort-Object -Unique
+            Get-NetTCPConnection -LocalAddress $WildcardInput | Select-Object -ExpandProperty LocalAddress | Sort-Object -Unique
             break
         }
         'RemoteAddress'
         {
-            Get-NetTCPConnection -RemoteAddress "$TrimmedWord*" | Select-Object -ExpandProperty RemoteAddress | Sort-Object -Unique
+            Get-NetTCPConnection -RemoteAddress $WildcardInput | Select-Object -ExpandProperty RemoteAddress | Sort-Object -Unique
             break
         }
         'LocalPort'
@@ -28,7 +28,7 @@ $ScriptBlock = {
     }
     foreach ($Value in $Values)
     {
-        if ($Value -like "$wordToComplete*")
+        if ($Value -like $WildcardInput)
         {
             [CompletionHelper]::NewParamCompletionResult($Value)
         }

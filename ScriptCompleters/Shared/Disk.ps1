@@ -3,7 +3,7 @@ using namespace System
 
 $ScriptBlock = {
     param($commandName, $parameterName, $wordToComplete, $commandAst, $fakeBoundParameters)
-    $TrimmedWord = [CompletionHelper]::TrimQuotes($wordToComplete)
+    $WildcardInput = [CompletionHelper]::TrimQuotes($wordToComplete) + '*'
 
     foreach ($Disk in [CompletionHelper]::GetCachedResults("Get-Disk", $false))
     {
@@ -25,7 +25,7 @@ $ScriptBlock = {
         }
 
 
-        if ($MatchText.Length -gt 0 -and $MatchText.StartsWith($TrimmedWord, [StringComparison]::OrdinalIgnoreCase))
+        if ($MatchText.Length -gt 0 -and $MatchText -like $WildcardInput)
         {
             [CompletionHelper]::NewParamCompletionResult($MatchText, "Number: $($Disk.Number) Model: $($Disk.Model) Location: $($Disk.Location)")
         }

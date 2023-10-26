@@ -18,11 +18,11 @@ function Get-UsefulArgumentCompleter
         [SupportsWildcards()]
         [ArgumentCompleter({
             param($commandName, $parameterName, $wordToComplete, $commandAst, $fakeBoundParameters)
-            $TrimmedWord = [CompletionHelper]::TrimQuotes($wordToComplete)
+            $WildcardInput = [CompletionHelper]::TrimQuotes($wordToComplete) + '*'
             $Commands = [CompletionHelper]::GetCachedResults("Import-Csv -Path '$PSScriptRoot\ArgumentCompleters.csv' -Delimiter ','", $false) | Select-Object -ExpandProperty CommandName | Sort-Object -Unique
             foreach ($Item in $Commands)
             {
-                if ($Item.StartsWith($TrimmedWord, [StringComparison]::OrdinalIgnoreCase))
+                if ($Item -like $WildcardInput)
                 {
                     [CompletionHelper]::NewParamCompletionResult($Item)
                 }
@@ -35,11 +35,11 @@ function Get-UsefulArgumentCompleter
         [SupportsWildcards()]
         [ArgumentCompleter({
             param($commandName, $parameterName, $wordToComplete, $commandAst, $fakeBoundParameters)
-            $TrimmedWord = [CompletionHelper]::TrimQuotes($wordToComplete)
+            $WildcardInput = [CompletionHelper]::TrimQuotes($wordToComplete) + '*'
             $Parameters = [CompletionHelper]::GetCachedResults("Import-Csv -Path '$PSScriptRoot\ArgumentCompleters.csv' -Delimiter ','", $false) | Select-Object -ExpandProperty ParameterName | Sort-Object -Unique
             foreach ($Item in $Parameters)
             {
-                if ($Item.StartsWith($TrimmedWord, [StringComparison]::OrdinalIgnoreCase))
+                if ($Item -like $WildcardInput)
                 {
                     [CompletionHelper]::NewParamCompletionResult($Item)
                 }

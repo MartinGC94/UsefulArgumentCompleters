@@ -4,7 +4,7 @@ using namespace System.Management.Automation
 
 $ScriptBlock = {
     param($commandName, $parameterName, $wordToComplete, $commandAst, $fakeBoundParameters)
-    $TrimmedWord = [CompletionHelper]::TrimQuotes($wordToComplete)
+    $WildcardInput = [CompletionHelper]::TrimQuotes($wordToComplete) + '*'
     $KnownPorts = @(
         @{Name="Any"                    ;Value="Any"             ;ToolTip='Any port'}
         @{Name="RPC"                    ;Value="RPC"             ;ToolTip='TCP port 49152-65535. RPC dynamic port range.'}
@@ -57,7 +57,7 @@ $ScriptBlock = {
     )
     foreach ($Port in $KnownPorts)
     {
-        if ($Port['Name'].StartsWith($TrimmedWord, [StringComparison]::OrdinalIgnoreCase))
+        if ($Port['Name'] -like $WildcardInput)
         {
             [CompletionResult]::new(
                 $Port['Value'],

@@ -3,7 +3,7 @@
 $ScriptBlock = {
     param($commandName, $parameterName, $wordToComplete, $commandAst, $fakeBoundParameters)
 
-    $TrimmedWord = [CompletionHelper]::TrimQuotes($wordToComplete)
+    $WildcardInput = [CompletionHelper]::TrimQuotes($wordToComplete) + '*'
     foreach ($TimeZone in [CompletionHelper]::GetCachedResults('Get-TimeZone -ListAvailable', $false))
     {
         if ($null -eq $TimeZone)
@@ -19,7 +19,7 @@ $ScriptBlock = {
             $TimeZone.Id
         }
 
-        if ($MatchText.StartsWith($TrimmedWord, [StringComparison]::OrdinalIgnoreCase))
+        if ($MatchText -like $WildcardInput)
         {
             [CompletionHelper]::NewParamCompletionResult($MatchText, $TimeZone.DisplayName)
         }

@@ -8,10 +8,10 @@ Register-ArgumentCompleter -CommandName Split-WindowsImage -ParameterName FileSi
         @{Name = "Fat32"; Size="4096"}
     )
 
-    $TrimmedWord = [CompletionHelper]::TrimQuotes($wordToComplete)
+    $WildcardInput = [CompletionHelper]::TrimQuotes($wordToComplete) + '*'
     foreach ($Item in $SizeConfigs)
     {
-        if ($Item['Name'].StartsWith($TrimmedWord, [StringComparison]::OrdinalIgnoreCase))
+        if ($Item['Name'] -like $WildcardInput)
         {
             [CompletionResult]::new(
                 $Item['Size'],

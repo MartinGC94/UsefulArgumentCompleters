@@ -3,15 +3,15 @@ using namespace System.Management.Automation
 
 $ScriptBlock = {
     param($commandName, $parameterName, $wordToComplete, $commandAst, $fakeBoundParameters)
-    $TrimmedWord = [CompletionHelper]::TrimQuotes($wordToComplete)
+    $WildcardInput = [CompletionHelper]::TrimQuotes($wordToComplete) + '*'
     
     $FoundVMs = if ($parameterName -eq "VMName" -or $parameterName -eq "Name")
     {
-        Hyper-V\Get-VM -Name "$TrimmedWord*" -ErrorAction Ignore
+        Hyper-V\Get-VM -Name $WildcardInput -ErrorAction Ignore
     }
     elseif ($parameterName -eq 'VMId' -or $parameterName -eq 'Id')
     {
-        Hyper-V\Get-VM -ErrorAction Ignore | Where-Object -FilterScript {$_.Id.Guid -like "$TrimmedWord*"}
+        Hyper-V\Get-VM -ErrorAction Ignore | Where-Object -FilterScript {$_.Id.Guid -like $WildcardInput}
     }
     else
     {
@@ -29,7 +29,7 @@ $ScriptBlock = {
             "{$($VM.Id.Guid)}"
         }
 
-        if ($MatchText.StartsWith($TrimmedWord, [StringComparison]::OrdinalIgnoreCase))
+        if ($MatchText -like $WildcardInput)
         {
             [CompletionResult]::new(
                 [CompletionHelper]::AddQuotesIfNeeded($MatchText),

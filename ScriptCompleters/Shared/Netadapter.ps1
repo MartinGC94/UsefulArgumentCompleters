@@ -3,7 +3,7 @@ using namespace System
 
 $ScriptBlock = {
     param($commandName, $parameterName, $wordToComplete, $commandAst, $fakeBoundParameters)
-    $TrimmedWord = [CompletionHelper]::TrimQuotes($wordToComplete)
+    $WildcardInput = [CompletionHelper]::TrimQuotes($wordToComplete) + '*'
 
     foreach ($Adapter in [CompletionHelper]::GetCachedResults("Get-NetAdapter", $false))
     {
@@ -11,7 +11,7 @@ $ScriptBlock = {
         {
             continue
         }
-        if ($Adapter.Name.StartsWith($TrimmedWord, [StringComparison]::OrdinalIgnoreCase))
+        if ($Adapter.Name -like $WildcardInput)
         {
             [CompletionHelper]::NewParamCompletionResult($Adapter.Name, $Adapter.InterfaceDescription)
         }

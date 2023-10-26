@@ -3,7 +3,7 @@
 $ScriptBlock = {
     param($commandName, $parameterName, $wordToComplete, $commandAst, $fakeBoundParameters)
 
-    $TrimmedWord = [CompletionHelper]::TrimQuotes($wordToComplete)
+    $WildcardInput = [CompletionHelper]::TrimQuotes($wordToComplete) + '*'
     foreach ($User in Get-LocalUser)
     {
         $MatchText = if ($parameterName -eq "Name")
@@ -15,7 +15,7 @@ $ScriptBlock = {
             $User.SID
         }
 
-        if ($MatchText.StartsWith($TrimmedWord, [StringComparison]::OrdinalIgnoreCase))
+        if ($MatchText -like $WildcardInput)
         {
             [CompletionHelper]::NewParamCompletionResult($MatchText, "$($User.Name) $($User.FullName)")
         }

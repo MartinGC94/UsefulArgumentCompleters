@@ -3,11 +3,11 @@ using namespace System
 
 $ScriptBlock = {
     param($commandName, $parameterName, $wordToComplete, $commandAst, $fakeBoundParameters)
-    $TrimmedWord = [CompletionHelper]::TrimQuotes($wordToComplete)
+    $WildcardInput = [CompletionHelper]::TrimQuotes($wordToComplete) + '*'
 
     $FoundVolumes = if ($parameterName -eq "FileSystemLabel")
     {
-        Get-Volume -FileSystemLabel "$TrimmedWord*"
+        Get-Volume -FileSystemLabel $WildcardInput
     }
     else
     {
@@ -25,7 +25,7 @@ $ScriptBlock = {
             [string]$Volume.DriveLetter
         }
 
-        if ($MatchText.Length -gt 0 -and $MatchText.StartsWith($TrimmedWord, [StringComparison]::OrdinalIgnoreCase))
+        if ($MatchText.Length -gt 0 -and $MatchText -like $WildcardInput)
         {
             [CompletionHelper]::NewParamCompletionResult($MatchText, $Volume.FileSystemLabel)
         }

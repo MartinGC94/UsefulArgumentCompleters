@@ -2,9 +2,9 @@
 
 $ScriptBlock = {
     param($commandName, $parameterName, $wordToComplete, $commandAst, $fakeBoundParameters)
-    $TrimmedWord = [CompletionHelper]::TrimQuotes($wordToComplete)
+    $WildcardInput = [CompletionHelper]::TrimQuotes($wordToComplete) + '*'
 
-    foreach ($Repository in Get-PSRepository -Name "$TrimmedWord*")
+    foreach ($Repository in Get-PSRepository -Name $WildcardInput)
     {
         [CompletionHelper]::NewParamCompletionResult($Repository.Name, $Repository.SourceLocation)
     }

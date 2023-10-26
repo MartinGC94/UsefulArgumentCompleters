@@ -78,7 +78,7 @@ Register-ArgumentCompleter -CommandName @(
     'Get-DAPolicyChange'
 ) -ParameterName PolicyStore -ScriptBlock {
     param($commandName, $parameterName, $wordToComplete, $commandAst, $fakeBoundParameters)
-    $TrimmedWord = [CompletionHelper]::TrimQuotes($wordToComplete)
+    $WildcardInput = [CompletionHelper]::TrimQuotes($wordToComplete) + '*'
 
     $ValidValues = @(
         if ($commandName -ne "Open-NetGPO")
@@ -107,7 +107,7 @@ Register-ArgumentCompleter -CommandName @(
             "$($PolicyStore.DomainName)\$($PolicyStore.DisplayName)"
         }
         
-        if ($PolicyStoreName.StartsWith($TrimmedWord, [StringComparison]::OrdinalIgnoreCase))
+        if ($PolicyStoreName -like $WildcardInput)
         {
             [CompletionHelper]::NewParamCompletionResult($PolicyStoreName)
         }

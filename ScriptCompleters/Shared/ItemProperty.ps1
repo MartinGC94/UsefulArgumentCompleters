@@ -37,10 +37,10 @@ Register-ArgumentCompleter -CommandName New-ItemProperty -ParameterName Property
         }
     }
 
-    $TrimmedWord = [CompletionHelper]::TrimQuotes($wordToComplete)
+    $WildcardInput = [CompletionHelper]::TrimQuotes($wordToComplete) + '*'
     foreach ($Item in $Values)
     {
-        if ($Item['Name'].StartsWith($TrimmedWord, [StringComparison]::OrdinalIgnoreCase))
+        if ($Item['Name'] -like $WildcardInput)
         {
             [CompletionHelper]::NewParamCompletionResult($Item['Name'], $Item['ToolTip'])
         }

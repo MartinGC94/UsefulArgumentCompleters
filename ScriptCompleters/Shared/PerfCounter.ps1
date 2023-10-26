@@ -3,7 +3,7 @@
 $ScriptBlock = {
     param($commandName, $parameterName, $wordToComplete, $commandAst, $fakeBoundParameters)
 
-    $TrimmedWord = [CompletionHelper]::TrimQuotes($wordToComplete)
+    $WildcardInput = [CompletionHelper]::TrimQuotes($wordToComplete) + '*'
     foreach ($Counter in [CompletionHelper]::GetCachedResults("Get-Counter -ListSet * | Sort-Object -Property CounterSetName", $false))
     {
         if ($null -eq $Counter)
@@ -12,7 +12,7 @@ $ScriptBlock = {
         }
         if ($parameterName -eq "ListSet")
         {
-            if ($Counter.CounterSetName.StartsWith($TrimmedWord, [StringComparison]::OrdinalIgnoreCase))
+            if ($Counter.CounterSetName -like $WildcardInput)
             {
                 [CompletionHelper]::NewParamCompletionResult($Counter.CounterSetName)
             }
@@ -21,7 +21,7 @@ $ScriptBlock = {
         {
             foreach ($Path in $Counter.Paths)
             {
-                if ($Path.StartsWith($TrimmedWord, [StringComparison]::OrdinalIgnoreCase))
+                if ($Path -like $WildcardInput)
                 {
                     [CompletionHelper]::NewParamCompletionResult($Path)
                 }

@@ -4,12 +4,12 @@ using namespace System.Management.Automation
 
 Register-ArgumentCompleter -CommandName Get-NetTCPConnection -ParameterName OwningProcess -ScriptBlock {
     param($commandName, $parameterName, $wordToComplete, $commandAst, $fakeBoundParameters)
-    $TrimmedWord = [CompletionHelper]::TrimQuotes($wordToComplete)
+    $WildcardInput = [CompletionHelper]::TrimQuotes($wordToComplete) + '*'
 
-    foreach ($Process in Get-Process -Name "$TrimmedWord*")
+    foreach ($Process in Get-Process -Name $WildcardInput)
     {
         $ListItem = "$($Process.Name) $($Process.Id)"
-        if ($ListItem.StartsWith($TrimmedWord, [StringComparison]::OrdinalIgnoreCase))
+        if ($ListItem -like $WildcardInput)
         {
             [CompletionResult]::new(
                 $Process.Id,

@@ -12,7 +12,7 @@ Register-ArgumentCompleter -CommandName @(
     'Set-NetIPsecRule'
 ) -ParameterName Protocol -ScriptBlock {
     param($commandName, $parameterName, $wordToComplete, $commandAst, $fakeBoundParameters)
-    $TrimmedWord = [CompletionHelper]::TrimQuotes($wordToComplete)
+    $WildcardInput = [CompletionHelper]::TrimQuotes($wordToComplete) + '*'
     $KnownProtocols = @(
         @{Name="Any";        Value="Any"}
         @{Name="TCP";        Value="TCP"}
@@ -33,7 +33,7 @@ Register-ArgumentCompleter -CommandName @(
     )
     foreach ($Protocol in $KnownProtocols)
     {
-        if ($Protocol['Name'].StartsWith($TrimmedWord, [StringComparison]::OrdinalIgnoreCase))
+        if ($Protocol['Name'] -like $WildcardInput)
         {
             [CompletionResult]::new(
                 $Protocol['Value'],

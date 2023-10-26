@@ -11,14 +11,14 @@ Register-ArgumentCompleter -CommandName Add-WindowsCapability,Get-WindowsCapabil
     {
         [CompletionHelper]::GetCachedResults('Get-WindowsCapability -Online', $false)
     }
-    $TrimmedWord = [CompletionHelper]::TrimQuotes($wordToComplete)
+    $WildcardInput = [CompletionHelper]::TrimQuotes($wordToComplete) + '*'
     foreach ($Feature in $FoundFeatures)
     {
         if ($null -eq $Feature)
         {
             continue
         }
-        if ($Feature.Name.StartsWith($TrimmedWord, [StringComparison]::OrdinalIgnoreCase))
+        if ($Feature.Name -like $WildcardInput)
         {
             [CompletionHelper]::NewParamCompletionResult($Feature.Name)
         }

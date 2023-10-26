@@ -4,7 +4,7 @@ using namespace System.Management.Automation
 
 Register-ArgumentCompleter -CommandName Test-NetConnection -ParameterName Port -ScriptBlock {
     param($commandName, $parameterName, $wordToComplete, $commandAst, $fakeBoundParameters)
-    $TrimmedWord = [CompletionHelper]::TrimQuotes($wordToComplete)
+    $WildcardInput = [CompletionHelper]::TrimQuotes($wordToComplete) + '*'
     $KnownPorts = @(
         @{Name="FTPData"                ;Value="20"   ;ToolTip='TCP Port 20. FTP (File Transfer Protocol) data transfer.'}
         @{Name="FTPControl"             ;Value="21"   ;ToolTip='TCP Port 21. FTP (File Transfer Protocol) control.'}
@@ -38,7 +38,7 @@ Register-ArgumentCompleter -CommandName Test-NetConnection -ParameterName Port -
     )
     foreach ($Port in $KnownPorts)
     {
-        if ($Port['Name'].StartsWith($TrimmedWord, [StringComparison]::OrdinalIgnoreCase))
+        if ($Port['Name'] -like $WildcardInput)
         {
             [CompletionResult]::new(
                 $Port['Value'],

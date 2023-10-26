@@ -11,10 +11,10 @@ Register-ArgumentCompleter -CommandName New-Partition -ParameterName GptType -Sc
         @{Name = "Basic";    Guid="{ebd0a0a2-b9e5-4433-87c0-68b6b72699c7}"}
     )
 
-    $TrimmedWord = [CompletionHelper]::TrimQuotes($wordToComplete)
+    $WildcardInput = [CompletionHelper]::TrimQuotes($wordToComplete) + '*'
     foreach ($Item in $Types)
     {
-        if ($Item['Name'].StartsWith($TrimmedWord, [StringComparison]::OrdinalIgnoreCase))
+        if ($Item['Name'] -like $WildcardInput)
         {
             [CompletionResult]::new(
                 "'$($Item['Guid'])'",

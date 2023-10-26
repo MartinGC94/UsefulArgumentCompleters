@@ -20,10 +20,10 @@ Register-ArgumentCompleter -CommandName Get-CimInstance -ParameterName Property 
         return
     }
 
-    $TrimmedWord = [CompletionHelper]::TrimQuotes($wordToComplete)
+    $WildcardInput = [CompletionHelper]::TrimQuotes($wordToComplete) + "*"
     foreach ($Item in $FoundClass.CimClassProperties)
     {
-        if ($Item.Name.StartsWith($TrimmedWord, [StringComparison]::OrdinalIgnoreCase))
+        if ($Item.Name -like $WildcardInput)
         {
             [CompletionHelper]::NewParamCompletionResult($Item.Name, "$($Item.Name) [$($Item.CimType)]")
         }

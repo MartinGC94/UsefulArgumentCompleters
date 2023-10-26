@@ -2,7 +2,7 @@
 
 $ScriptBlock = {
     param($commandName, $parameterName, $wordToComplete, $commandAst, $fakeBoundParameters)
-    $TrimmedWord = [CompletionHelper]::TrimQuotes($wordToComplete)
+    $WildcardInput = [CompletionHelper]::TrimQuotes($wordToComplete) + '*'
 
     foreach ($Package in [CompletionHelper]::GetCachedResults('Get-AppxPackage | Sort-Object -Property Name', $false))
     {
@@ -20,7 +20,7 @@ $ScriptBlock = {
             $Package.Name
         }
 
-        if ($MatchText -like "*$TrimmedWord*")
+        if ($MatchText -like $WildcardInput)
         {
             [CompletionHelper]::NewParamCompletionResult($MatchText, $Package.Name)
         }
