@@ -25,5 +25,5 @@ $ScriptBlock = {
         }
     }
 }
-Register-ArgumentCompleter -CommandName Get-TimeZone -ParameterName Name -ScriptBlock $ScriptBlock
-Register-ArgumentCompleter -CommandName Get-TimeZone -ParameterName Id -ScriptBlock $ScriptBlock
+Register-ArgumentCompleter -CommandName Get-TimeZone,Set-TimeZone -ParameterName Name -ScriptBlock $ScriptBlock
+Register-ArgumentCompleter -CommandName Get-TimeZone,Set-TimeZone -ParameterName Id -ScriptBlock $ScriptBlock

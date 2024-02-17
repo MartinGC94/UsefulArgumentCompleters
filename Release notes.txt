@@ -1,3 +1,6 @@
+1.0.12:
+    Add completers for Set-TimeZone
+    Add completers for the Name parameter for the *PSSessionConfiguration commands
 1.0.11:
     Replace "StartsWith" across all completers with "-like" so wildcards in the input text are respected.
     Add Name, SID and Member completers for *-LocalGroup* commands
